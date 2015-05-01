@@ -6,14 +6,16 @@ public class Cities{
 		 cities.add("Louisville");
 		 cities.add("Chicago");
 		 cities.add("Orlando");
-		 
-		 boolean found = false;
-		 for(String city:cities){
-		 	if(city.equalsIgnoreCase("Chicago")){
-		 		found = true;
-		 	}
-		 }
 
-		System.out.println("Found chicago?:" + found);
+		 // imperative style
+		 // boolean found = false;
+		 // for(String city:cities){
+		 // 	if(city.equalsIgnoreCase("Chicago")){
+		 // 		found = true;
+		 // 	}
+		 // }
+
+		// declarative style	
+		System.out.println("Found chicago?:" + cities.contains("chicago"));
 	}
 }
