@@ -10,26 +10,45 @@ import java.math.*;
 public class Prices{
 	public static void main(String... args){
 		long startTime,endTime; 
+		BigDecimal total = new BigDecimal(0);
 		final List<BigDecimal> prices = setPrices();
 
 		startTime = System.nanoTime();
-		BigDecimal total1 = getDiscountedTotal(prices);
+		//total = getDiscountedTotal(prices);
 		endTime = System.nanoTime();
-		System.out.println("Discounted Total: " + total1);
-		System.out.println("Executed in: " + (endTime - startTime)/1e6);
+		System.out.println("Discounted Total: " + total);
+		System.out.println("  Executed in: " + (endTime - startTime)/1e6);
 
 		startTime = System.nanoTime();
-		BigDecimal total2 = getDiscountedTotalFunctionally(prices);
+		total = getDiscountedTotalFunctionally(prices);
 		endTime = System.nanoTime();
-		System.out.println("Discounted Total: " + total2);
-		System.out.println("Executed in: " + (endTime - startTime)/1e6);
+		System.out.println("Discounted Total: " + total);
+		System.out.println("  Executed in: " + (endTime - startTime)/1e6);
+
+		startTime = System.nanoTime();
+		//total = getDiscountedTotalFunctionallyAndParallized(prices);
+		endTime = System.nanoTime();
+		System.out.println("Discounted Total: " + total);
+		System.out.println("  Executed in: " + (endTime - startTime)/1e6);
+
+		System.out.println("\nTotal Array Size: " + prices.size());
+		//System.out.println("Data: ");
+		//prices.stream()
+		//	.forEach(System.out::println);
 
 	}
 	private static List<BigDecimal> setPrices(){
-		return Arrays.asList(
+		/*return Arrays.asList(
 			new BigDecimal("10"), new BigDecimal("30"), new BigDecimal("17"),
 			new BigDecimal("20"), new BigDecimal("15"), new BigDecimal("18"),
 			new BigDecimal("45"), new BigDecimal("12"));
+		*/
+		List<BigDecimal> list = new ArrayList<BigDecimal>();
+		for(int i=0; i<25000000;i++){
+			list.add(new BigDecimal((int)(Math.random() * 100)));
+		}
+		return list;
+		
 	}
 	private static BigDecimal getDiscountedTotal(List<BigDecimal> prices){
 		BigDecimal totalOfDiscountedPrices = BigDecimal.ZERO;
@@ -42,6 +61,12 @@ public class Prices{
 	}
 	private static BigDecimal getDiscountedTotalFunctionally(List<BigDecimal>prices){
 		return prices.stream()
+				.filter(price -> price.compareTo(BigDecimal.valueOf(20)) > 0)
+				.map(price -> price.multiply(BigDecimal.valueOf(0.9)))
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+	private static BigDecimal getDiscountedTotalFunctionallyAndParallized(List<BigDecimal>prices){
+		return prices.parallelStream()
 				.filter(price -> price.compareTo(BigDecimal.valueOf(20)) > 0)
 				.map(price -> price.multiply(BigDecimal.valueOf(0.9)))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
