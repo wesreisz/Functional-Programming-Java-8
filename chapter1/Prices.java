@@ -5,6 +5,11 @@ import java.math.*;
 //10%. Let’s do that in the habitual Java way first.
 // getDiscountedTotal: does this the traditional imperative way
 // getDiscountedTotalFunctionally: does this example declaratively with lamdbas
+//
+
+//test process
+//while [ true ]; do ps -eaf | grep -i java| grep -i sublime; echo "----"; sleep 1; done;
+
 		
 
 public class Prices{
@@ -14,7 +19,7 @@ public class Prices{
 		final List<BigDecimal> prices = setPrices();
 
 		startTime = System.nanoTime();
-		//total = getDiscountedTotal(prices);
+		total = getDiscountedTotal(prices);
 		endTime = System.nanoTime();
 		System.out.println("Discounted Total: " + total);
 		System.out.println("  Executed in: " + (endTime - startTime)/1e6);
@@ -26,7 +31,7 @@ public class Prices{
 		System.out.println("  Executed in: " + (endTime - startTime)/1e6);
 
 		startTime = System.nanoTime();
-		//total = getDiscountedTotalFunctionallyAndParallized(prices);
+		total = getDiscountedTotalFunctionallyAndParallized(prices);
 		endTime = System.nanoTime();
 		System.out.println("Discounted Total: " + total);
 		System.out.println("  Executed in: " + (endTime - startTime)/1e6);
@@ -44,7 +49,7 @@ public class Prices{
 			new BigDecimal("45"), new BigDecimal("12"));
 		*/
 		List<BigDecimal> list = new ArrayList<BigDecimal>();
-		for(int i=0; i<25000000;i++){
+		for(int i=0; i<1000000;i++){
 			list.add(new BigDecimal((int)(Math.random() * 100)));
 		}
 		return list;
