@@ -1,4 +1,4 @@
-//Task Declarative Approach to find if Chicago
+//Task Imperative Approach to find if Chicago
 //is in a given collection of cities.
 public class CitiesRevisited{
 	private static long startTime,endTime;
